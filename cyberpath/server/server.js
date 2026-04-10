@@ -24,23 +24,17 @@ mongoose.connect(process.env.MONGO_URI, { dbName: 'myapp' })
   .then(async () => {
     console.log('MongoDB connected');
     
-    // Seed initial announcements
-    const welcomeAnnouncement = await Announcement.findById('welcome-v1');
-    if (!welcomeAnnouncement) {
+    // Clear out old unnecessary announcements so they immediately disappear for all users
+    await Announcement.deleteMany({ _id: { $in: ['welcome-v1', 'profile-tip-v1'] } });
+
+    // Seed the new singular development announcement
+    const devAnnouncement = await Announcement.findById('dev-update-v1');
+    if (!devAnnouncement) {
       await Announcement.create({
-        _id: 'welcome-v1',
-        message: 'Welcome to CyberPath. Your roadmap is ready. Head to the Roadmap tab to begin your first session. Track your progress daily and use the News section to stay current with the industry.'
+        _id: 'dev-update-v1',
+        message: 'Hello there! I am currently working on developing this website more and in a beautiful manner, if you have any suggestion of what I should add next or if you need some features, feel free to drop in feedback in profile section. I will certainly do so.'
       });
-      console.log('Seeded welcome announcement.');
-    }
-    
-    const profileAnnouncement = await Announcement.findById('profile-tip-v1');
-    if (!profileAnnouncement) {
-      await Announcement.create({
-        _id: 'profile-tip-v1',
-        message: 'You can change your password anytime from your Profile page. Your password is stored as a bcrypt hash — it is not accessible to anyone, including the platform administrators.'
-      });
-      console.log('Seeded profile tip announcement.');
+      console.log('Seeded new developer announcement.');
     }
   })
   .catch(err => {
