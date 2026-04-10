@@ -25,14 +25,14 @@ mongoose.connect(process.env.MONGO_URI, { dbName: 'myapp' })
     console.log('MongoDB connected');
     
     // Clear out old unnecessary announcements so they immediately disappear for all users
-    await Announcement.deleteMany({ _id: { $in: ['welcome-v1', 'profile-tip-v1', 'dev-update-v1'] } });
+    await Announcement.deleteMany({ _id: { $in: ['welcome-v1', 'profile-tip-v1', 'dev-update-v1', 'dev-update-v2', 'dev-update-v3', 'dev-update-v4'] } });
 
     // Seed the new singular development announcement
-    const devAnnouncement = await Announcement.findById('dev-update-v2');
+    const devAnnouncement = await Announcement.findById('dev-update-v5');
     if (!devAnnouncement) {
       await Announcement.create({
-        _id: 'dev-update-v2',
-        message: "Hello there! I am currently working on developing this website more and in a beautiful manner, if you have any suggestion of what I should add next or if you need some features, feel free to drop in feedback in profile section. I will certainly do so. I don't think this portal should be told everywhere for few days, keep it personal only with you only for some days until it's ready to go private."
+        _id: 'dev-update-v5',
+        message: "Hello there! I am currently working on developing this website further. I've explicitly created it for single-person use for the next few days until new things can be added. If you have any suggestions on what I should add next or if you need specific features, feel free to drop them in the feedback section of your profile. Please keep this portal personal and don't share it around just yet, at least until it's ready to go fully public, thank you for the co-operation. Signing off...."
       });
       console.log('Seeded new developer announcement.');
     }
