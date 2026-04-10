@@ -78,12 +78,36 @@ router.post('/dismiss-announcement/:id', authMiddleware, async (req, res) => {
   }
 });
 
-// Feedback email simulation
+const nodemailer = require('nodemailer');
+
+// Feedback email actual delivery via SMTP
 router.post('/feedback', async (req, res) => {
-  // Silent routing to itsdarickkurin@gmail.com
-  // As requested, not actually implemented via real SMPT unless required
-  console.log(`[Email Mock] Feedback received: ${JSON.stringify(req.body)} -> Routed to itsdarickkurin@gmail.com`);
-  res.json({ message: 'Feedback sent successfully.' });
+  try {
+    const { email, message } = req.body;
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER || 'no-reply@cyberpath.com',
+      to: 'itsdarickkurin@gmail.com',
+      subject: `CyberPath App Feedback`,
+      text: `You have received new feedback from the CyberPath application.\n\nSender Email Provided: ${email || 'None'}\n\nMessage:\n${message || 'No message content'}`
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log(`[Email Success] Feedback routed to itsdarickkurin@gmail.com`);
+    res.json({ message: 'Feedback sent successfully.' });
+  } catch (error) {
+    console.error('[Email Error] Failed to send feedback via Nodemailer:', error);
+    // Return 500 so the frontend indicates failure if SMTP crashes
+    res.status(500).json({ message: 'Failed to send feedback' });
+  }
 });
 
 module.exports = router;
