@@ -25,14 +25,14 @@ mongoose.connect(process.env.MONGO_URI, { dbName: 'myapp' })
     console.log('MongoDB connected');
     
     // Clear out old unnecessary announcements so they immediately disappear for all users
-    await Announcement.deleteMany({ _id: { $in: ['welcome-v1', 'profile-tip-v1'] } });
+    await Announcement.deleteMany({ _id: { $in: ['welcome-v1', 'profile-tip-v1', 'dev-update-v1'] } });
 
     // Seed the new singular development announcement
-    const devAnnouncement = await Announcement.findById('dev-update-v1');
+    const devAnnouncement = await Announcement.findById('dev-update-v2');
     if (!devAnnouncement) {
       await Announcement.create({
-        _id: 'dev-update-v1',
-        message: 'Hello there! I am currently working on developing this website more and in a beautiful manner, if you have any suggestion of what I should add next or if you need some features, feel free to drop in feedback in profile section. I will certainly do so.'
+        _id: 'dev-update-v2',
+        message: "Hello there! I am currently working on developing this website more and in a beautiful manner, if you have any suggestion of what I should add next or if you need some features, feel free to drop in feedback in profile section. I will certainly do so. I don't think this portal should be told everywhere for few days, keep it personal only with you only for some days until it's ready to go private."
       });
       console.log('Seeded new developer announcement.');
     }
