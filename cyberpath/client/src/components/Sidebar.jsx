@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Map, Newspaper, User, LogOut } from 'lucide-react';
+import { LayoutDashboard, Map, Newspaper, User, LogOut, Sun, Moon } from 'lucide-react';
 import { useStore } from '../store/useStore';
 
 const Sidebar = () => {
-  const { logout } = useStore();
+  const { logout, theme, toggleTheme } = useStore();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -46,7 +46,14 @@ const Sidebar = () => {
         ))}
       </nav>
 
-      <div className="p-4 border-t border-border">
+      <div className="p-4 border-t border-border space-y-2">
+        <button 
+          onClick={toggleTheme}
+          className="flex w-full items-center gap-3 px-4 py-3 text-text-secondary hover:bg-surface-2 hover:text-text-primary rounded-md transition-colors"
+        >
+          {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          <span className="font-medium text-sm">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+        </button>
         <button 
           onClick={handleLogout}
           className="flex w-full items-center gap-3 px-4 py-3 text-text-secondary hover:bg-surface-2 hover:text-danger hover:border-danger hover:border rounded-md transition-colors"

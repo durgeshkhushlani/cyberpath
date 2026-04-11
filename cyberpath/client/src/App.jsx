@@ -70,7 +70,7 @@ const MainLayout = ({ children }) => {
 };
 
 const App = () => {
-  const { fetchUserContext, isAuthenticated } = useStore();
+  const { fetchUserContext, isAuthenticated, theme } = useStore();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -79,23 +79,27 @@ const App = () => {
   }, [isAuthenticated, fetchUserContext]);
 
   return (
-    <BrowserRouter>
-      <Toaster position="top-right" 
-               toastOptions={{ style: { background: '#111F38', color: '#F1F5F9', border: '1px solid #1E3A5F' } }} />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        
-        {/* Protected routes wrapped in MainLayout */}
-        <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
-        <Route path="/dashboard" element={<ProtectedRoute><MainLayout><Dashboard /></MainLayout></ProtectedRoute>} />
-        <Route path="/roadmap" element={<ProtectedRoute><MainLayout><Roadmap /></MainLayout></ProtectedRoute>} />
-        <Route path="/news" element={<ProtectedRoute><MainLayout><News /></MainLayout></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><MainLayout><Profile /></MainLayout></ProtectedRoute>} />
-        
-        <Route path="*" element={<Navigate to={isAuthenticated ? '/dashboard' : '/login'} />} />
-      </Routes>
-    </BrowserRouter>
+    <div className={theme}>
+      <div className="w-full h-full bg-background min-h-screen text-text-primary">
+        <BrowserRouter>
+          <Toaster position="top-right" 
+                   toastOptions={{ style: { background: 'var(--color-surface)', color: 'var(--color-text-primary)', border: '1px solid var(--color-border)' } }} />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            
+            {/* Protected routes wrapped in MainLayout */}
+            <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
+            <Route path="/dashboard" element={<ProtectedRoute><MainLayout><Dashboard /></MainLayout></ProtectedRoute>} />
+            <Route path="/roadmap" element={<ProtectedRoute><MainLayout><Roadmap /></MainLayout></ProtectedRoute>} />
+            <Route path="/news" element={<ProtectedRoute><MainLayout><News /></MainLayout></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><MainLayout><Profile /></MainLayout></ProtectedRoute>} />
+            
+            <Route path="*" element={<Navigate to={isAuthenticated ? '/dashboard' : '/login'} />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </div>
   );
 };
 

@@ -4,26 +4,27 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        background: '#0A1628',
-        surface: '#111F38',
-        'surface-2': '#1A2F52',
-        border: '#1E3A5F',
-        accent: '#2563EB',
-        'accent-hover': '#1D4ED8',
-        'text-primary': '#F1F5F9',
-        'text-secondary': '#94A3B8',
-        'text-muted': '#64748B',
-        success: '#16A34A',
-        warning: '#D97706',
-        danger: '#DC2626',
-        'progress-bar': '#2563EB',
+        background: 'var(--color-bg)',
+        surface: 'var(--color-surface)',
+        'surface-2': 'var(--color-surface-2)',
+        border: 'var(--color-border)',
+        accent: 'var(--color-accent)',
+        'accent-hover': 'var(--color-accent-hover)',
+        'text-primary': 'var(--color-text-primary)',
+        'text-secondary': 'var(--color-text-secondary)',
+        'text-muted': 'var(--color-text-muted)',
+        success: 'var(--color-success)',
+        warning: 'var(--color-warning)',
+        danger: 'var(--color-danger)',
+        'progress-bar': 'var(--color-accent)',
       },
       fontFamily: {
         mono: ['"IBM Plex Mono"', 'monospace'],
-        sans: ['Inter', 'sans-serif']
+        sans: ['Aptos', 'Inter', 'system-ui', 'sans-serif']
       }
     },
   },

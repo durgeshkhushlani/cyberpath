@@ -6,8 +6,15 @@ export const useStore = create((set, get) => ({
   user: null,
   token: localStorage.getItem('token') || null,
   isAuthenticated: !!localStorage.getItem('token'),
+  theme: localStorage.getItem('theme') || 'dark',
   announcements: [],
   progress: null, // { completedTaskIds: [], completedDays: [], totalTasksInMode: 0 }
+
+  toggleTheme: () => {
+    const newTheme = get().theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', newTheme);
+    set({ theme: newTheme });
+  },
 
   login: async (username, password) => {
     const res = await api.post('/auth/login', { username, password });

@@ -13,7 +13,7 @@ export const roadmapData = {
             resources: [
               { label: "Professor Messer Network+", url: "https://www.professormesser.com/network-plus/n10-009/n10-009-video/n10-009-training-course/" },
               { label: "Cisco Networking Basics", url: "https://skillsforall.com/course/networking-basics" },
-              { label: "Subnetting Practice", url: "https://www.subnettingpractice.com/" },
+              { label: "Subnetting Practice", url: "https://subnetipv4.com/" },
               { label: "TryHackMe Pre-Security Path", url: "https://tryhackme.com/path/outline/presecurity" },
               { label: "ipcalc online", url: "https://jodies.de/ipcalc" }
             ],
