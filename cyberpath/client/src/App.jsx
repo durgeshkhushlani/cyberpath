@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Menu } from 'lucide-react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useStore } from './store/useStore';
@@ -28,14 +29,22 @@ const ProtectedRoute = ({ children }) => {
 
 const MainLayout = ({ children }) => {
   const { calculateProgressPercent, user } = useStore();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background">
-      <Sidebar />
+    <div className="flex h-screen w-full overflow-hidden bg-background relative">
+      <Sidebar isMobileOpen={isMobileMenuOpen} closeMobileMenu={() => setIsMobileMenuOpen(false)} />
       <div className="flex flex-col flex-1 h-full overflow-hidden">
         {/* Top bar placeholder for progress/info */}
-        <header className="h-16 border-b border-border bg-surface flex items-center justify-between px-6 shrink-0">
-          <div className="flex items-center gap-4">
-            <span className="text-text-primary font-mono text-sm uppercase bg-surface-2 px-3 py-1 rounded-full border border-border">
+        <header className="h-16 border-b border-border bg-surface flex items-center justify-between px-4 md:px-6 shrink-0">
+          <div className="flex items-center gap-3 md:gap-4">
+            <button 
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="md:hidden p-2 -ml-2 text-text-secondary hover:text-text-primary rounded-md focus:outline-none"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+            <span className="hidden sm:inline-block text-text-primary font-mono text-sm uppercase bg-surface-2 px-3 py-1 rounded-full border border-border">
               {user?.selectedMode ? user.selectedMode.replace('_', ' ') : 'CyberPath'}
             </span>
             <div className="flex flex-col">
