@@ -78,10 +78,29 @@ export const useStore = create((set, get) => ({
     set({ progress: res.data });
   },
 
-  calculateProgressPercent: () => {
+  calculateProgressData: () => {
     const p = get().progress;
-    if (!p || !p.totalTasksInMode || p.totalTasksInMode === 0) return 0;
-    const progressPercent = (p.completedTaskIds.length / p.totalTasksInMode) * 100;
-    return progressPercent > 100 ? 100 : Number(progressPercent.toFixed(1));
+    const user = get().user;
+    if (!p || !user || !user.selectedMode || !roadmapData[user.selectedMode]) {
+       return { completed: 0, total: 0, percent: 0 };
+    }
+    
+    const modeData = roadmapData[user.selectedMode];
+    let calculatedTotal = 0;
+    modeData.weeks.forEach(week => {
+       week.days.forEach(day => {
+          calculatedTotal += day.tasks?.length || 0;
+       });
+    });
+    
+    const total = calculatedTotal > 0 ? calculatedTotal : (modeData.totalTasks || 0);
+    const completed = p.completedTaskIds ? p.completedTaskIds.length : 0;
+    const percent = total > 0 ? (completed / total) * 100 : 0;
+    
+    return {
+      completed,
+      total,
+      percent: percent > 100 ? 100 : Number(percent.toFixed(1))
+    };
   }
 }));

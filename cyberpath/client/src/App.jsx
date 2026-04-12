@@ -28,8 +28,10 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const MainLayout = ({ children }) => {
-  const { calculateProgressPercent, user } = useStore();
+  const { calculateProgressData, user } = useStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  const progressData = calculateProgressData();
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background relative">
@@ -51,10 +53,13 @@ const MainLayout = ({ children }) => {
               <div className="w-48 h-1.5 bg-surface-2 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-progress-bar transition-all duration-500"
-                  style={{ width: `${calculateProgressPercent()}%` }}
+                  style={{ width: `${progressData.percent}%` }}
                 />
               </div>
-              <span className="text-xs text-text-secondary mt-1 tracking-wide font-mono">{calculateProgressPercent()}% Complete</span>
+              <div className="flex items-center justify-between mt-1">
+                <span className="text-xs text-text-secondary tracking-wide font-mono">{progressData.completed} / {progressData.total} Tasks</span>
+                <span className="text-xs text-text-primary tracking-wide font-mono font-bold">{progressData.percent}%</span>
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-3">
