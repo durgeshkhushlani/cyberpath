@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Menu } from 'lucide-react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { Analytics } from '@vercel/analytics/react';
 import { useStore } from './store/useStore';
-
 // Pages
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -93,6 +93,7 @@ const App = () => {
         <BrowserRouter>
           <Toaster position="top-right" 
                    toastOptions={{ style: { background: 'var(--color-surface)', color: 'var(--color-text-primary)', border: '1px solid var(--color-border)' } }} />
+          <Analytics />
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
