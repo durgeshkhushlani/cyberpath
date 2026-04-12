@@ -6,11 +6,12 @@ import { Link } from 'react-router-dom';
 import { differenceInDays } from 'date-fns';
 
 const Dashboard = () => {
-  const { user, progress, calculateProgressPercent } = useStore();
+  const { user, progress, calculateProgressData } = useStore();
   
   if (!user || !progress) return <div>Loading...</div>;
 
-  const percent = calculateProgressPercent();
+  const progressData = calculateProgressData();
+  const percent = progressData.percent;
   
   const datachart = [{ name: 'Progress', value: percent, fill: '#2563EB' }];
 
@@ -89,7 +90,7 @@ const Dashboard = () => {
         <div className="space-y-6 flex flex-col">
           <div className="card flex-1 flex flex-col justify-center items-center text-center">
             <CheckCircle className="w-8 h-8 text-success mb-3" />
-            <span className="text-3xl font-mono font-bold text-text-primary mb-1">{progress.completedTaskIds.length} <span className="text-lg text-text-muted">/ {progress.totalTasksInMode}</span></span>
+            <span className="text-3xl font-mono font-bold text-text-primary mb-1">{progressData.completed} <span className="text-lg text-text-muted">/ {progressData.total}</span></span>
             <span className="text-sm text-text-secondary">Tasks Completed</span>
           </div>
           

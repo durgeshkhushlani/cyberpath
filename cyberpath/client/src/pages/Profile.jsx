@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import api from '../api/axios';
 
 const Profile = () => {
-  const { user, fetchUserContext, calculateProgressPercent } = useStore();
+  const { user, fetchUserContext, calculateProgressData } = useStore();
   const [displayName, setDisplayName] = useState(user?.displayName || '');
   const [email, setEmail] = useState(user?.email || '');
   
@@ -103,7 +103,7 @@ const Profile = () => {
               </div>
               <div className="flex justify-between border-b border-border pb-2">
                 <span className="text-text-muted">Progress</span>
-                <span className="font-mono text-accent font-bold">{calculateProgressPercent()}%</span>
+                <span className="font-mono text-accent font-bold">{calculateProgressData().percent}%</span>
               </div>
             </div>
             <button onClick={handleResetOnboarding} className="btn-outline w-full mt-6 text-danger border-danger hover:bg-danger/10 hover:text-danger">
